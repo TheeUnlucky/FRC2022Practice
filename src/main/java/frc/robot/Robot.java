@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 
   private final Joystick joyStick1 = new Joystick(0);
   private final Timer myTimer = new Timer();
-  private final TalonSRX talon1 = new TalonSRX(1);
+  private final TalonSRX talon1 = new TalonSRX(3);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -53,15 +53,6 @@ public class Robot extends TimedRobot {
     myTimer.reset();
     myTimer.stop();
     myTimer.start();
-    if (myTimer.get() < 6.0) {
-      talon1.set(TalonSRXControlMode.PercentOutput, 0.3);
-    } else {
-      talon1.set(TalonSRXControlMode.PercentOutput, -0.2);
-    }
-    if (myTimer.get() == 0) {
-      talon1.set(TalonSRXControlMode.PercentOutput, 0.0);
-    }
-  
 }
 
   /** This function is called periodically during autonomous. */
@@ -73,6 +64,12 @@ public class Robot extends TimedRobot {
     } else { //or else:
       m_robotDrive.arcadeDrive(-1.0, 0.0); // stop robot
     }*/
+    if (myTimer.get() < 6.0) {
+      talon1.set(TalonSRXControlMode.PercentOutput, 0.3);
+    } else {
+      talon1.set(TalonSRXControlMode.PercentOutput, 0.0);
+    }
+  
   }
 
   /** This function is called once each time the robot enters teleoperated mode. */
@@ -86,8 +83,11 @@ public class Robot extends TimedRobot {
     if (joyStick1.getRawButton(5)){
       talon1.set(TalonSRXControlMode.PercentOutput, 0.3);
     }
-    if (joyStick1.getRawButton(6)){
+    else if (joyStick1.getRawButton(6)){
       talon1.set(TalonSRXControlMode.PercentOutput, -0.3);
+    }
+    else {
+      talon1.set(TalonSRXControlMode.PercentOutput, 0.0);
     }
   }
 
